@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# Docker container 이름
+CONTAINER_NAME=influxdb
+# 백업 디렉토리
+BACKUP_DIR=/data/mariadb_db-mariadb/_data/influxdb_backup
+
+# 날짜로 백업 파일 이름 설정
+TIMESTAMP=$(date +%Y%m%d_%H%M%S)
+BACKUP_FILE="$BACKUP_DIR/influxdb_backup_$TIMESTAMP.tar.gz"
+
+# InfluxDB 컨테이너 중지
+echo "Stopping InfluxDB container..."
+docker stop $CONTAINER_NAME
+
+# 백업 실행
+echo "Backing up data..."
+tar -czvf $BACKUP_FILE /data/mariadb_db-mariadb/_data/influxdb
+
+# InfluxDB 컨테이너 재시작
+echo "Starting InfluxDB container..."
+docker start $CONTAINER_NAME
+
+# 완료 메시지
+echo "Backup completed: $BACKUP_FILE"

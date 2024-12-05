@@ -1,0 +1,8 @@
+version: '3.8'
+
+services:
+  ai-predictor:
+    build:
+      context: .
+    volumes:
+      - ./app:/app

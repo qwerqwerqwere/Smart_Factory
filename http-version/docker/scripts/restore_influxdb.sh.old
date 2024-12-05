@@ -1,0 +1,39 @@
+#!/bin/bash
+
+# Docker container 이름
+CONTAINER_NAME=influxdb
+# 백업 디렉토리
+BACKUP_DIR=/data/mariadb_db-mariadb/_data/influxdb_backup/
+# InfluxDB 데이터 디렉토리 경로
+DATA_DIR=/data/mariadb_db-mariadb/_data/influxdb/
+
+# 최신 백업 파일 찾기
+BACKUP_FILE=$(ls -t $BACKUP_DIR/influxdb_backup_*.tar.gz | head -n 1)
+
+# 최신 백업 파일이 있는지 확인
+if [ -z "$BACKUP_FILE" ]; then
+  echo "No backup file found in $BACKUP_DIR"
+  exit 1
+fi
+
+# 복원 프로세스 시작
+echo "Using backup file: $BACKUP_FILE"
+
+# InfluxDB 컨테이너 중지
+echo "Stopping InfluxDB container..."
+docker stop $CONTAINER_NAME
+
+# 기존 데이터 삭제 (필요 시 백업 후 삭제)
+echo "Removing old data..."
+rm -rf $DATA_DIR/*
+
+# 백업 파일 복원 (불필요한 경로 제거)
+echo "Restoring backup..."
+tar --strip-components=4 -xzvf $BACKUP_FILE -C $DATA_DIR
+
+# InfluxDB 컨테이너 재시작
+echo "Starting InfluxDB container..."
+docker start $CONTAINER_NAME
+
+# 완료 메시지
+echo "Restore completed from backup: $BACKUP_FILE"
