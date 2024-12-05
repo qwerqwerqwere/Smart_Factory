@@ -11,7 +11,7 @@ services:
       - /data/mariadb_db-mariadb/_data/influxdb:/var/lib/influxdb2
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
-      - ~/projects/Rabbitmq-Grafana/ssl/bigdatalab.cloud249.com:/etc/ssl
+      - ~/projects/ssl-version/ssl/bigdatalab.cloud249.com:/etc/ssl
       - ./scripts/installsetup.sh:/usr/local/bin/install_and_setup.sh  # 설치 및 설정 스크립트 복사
       - ./scripts/backup_influxdb.sh:/usr/local/bin/influxdb_backup.sh               # 백업 스크립트 복사
     command: |
@@ -76,7 +76,7 @@ services:
       - ./grafana/grafana.ini:/etc/grafana/grafana.ini
       - ./provisioning/datasources:/etc/grafana/provisioning/datasources
       - ./provisioning/dashboards:/etc/grafana/provisioning/dashboards
-      - ~/projects/Rabbitmq-Grafana/ssl/bigdatalab.cloud249.com:/etc/ssl
+      - ~/projects/ssl-version/ssl/bigdatalab.cloud249.com:/etc/ssl
     networks:
       - monitoring
     depends_on:

@@ -16,7 +16,7 @@ services:
       #- db-mariadb:/var/lib/mysql:rw
     ports:
       - "3306:3306"
-    env_file: /root/projects/Rabbitmq-Grafana/docker/credentials.env
+    env_file: /root/projects/ssl-version/docker/credentials.env
     command: 'mariadbd --innodb-flush-method=fsync'
 
   backup:
@@ -30,7 +30,7 @@ services:
     volumes:
       - /data/mariadb_db-mariadb/_data:/data
       - ./scripts/ssmtp.conf:/etc/ssmtp/ssmtp.conf
-    env_file: /root/projects/Rabbitmq-Grafana/docker/credentials.env
+    env_file: /root/projects/ssl-version/docker/credentials.env
     command: >
       sh -c "echo '0 0 * * * /usr/local/bin/mariadb_backup.sh >> /var/log/mariadb_backup.log 2>&1' | crontab - && cron -f"
 
