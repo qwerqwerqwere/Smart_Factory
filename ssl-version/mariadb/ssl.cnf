@@ -1,0 +1,5 @@
+[mysqld]
+ssl-ca=/etc/mysql/certs/fullchain1.pem
+ssl-cert=/etc/mysql/certs/cert1.pem
+ssl-key=/etc/mysql/certs/privkey1.pem
+require_secure_transport=ON

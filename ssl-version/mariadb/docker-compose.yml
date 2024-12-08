@@ -13,6 +13,8 @@ services:
     volumes:
       - /data/mariadb_db-mariadb/_data:/var/lib/mysql:rw
       - ./scripts/ssmtp.conf:/etc/ssmtp/ssmtp.conf
+      - ~/projects/ssl-version/ssl/bigdatalab.cloud249.com:/etc/mysql/certs
+      - ./ssl.cnf:/etc/mysql/mariadb.conf.d/ssl.cnf
       #- db-mariadb:/var/lib/mysql:rw
     ports:
       - "3306:3306"
